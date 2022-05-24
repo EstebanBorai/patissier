@@ -1,3 +1,32 @@
+/**
+ * Values supported by the `SameSite` attribute.
+ */
+export enum SameSite {
+  /**
+   * Cookies will be sent in all contexts, i.e. in responses to both first-party
+   * and cross-site requests. If SameSite=None is set, the cookie Secure
+   * attribute must also be set (or the cookie will be blocked).
+   */
+  None = 'None',
+  /**
+   * Cookies are not sent on normal cross-site subrequests (for example to load
+   * images or frames into a third party site), but are sent when a user is
+   * navigating to the origin site (i.e., when following a link).
+   */
+  Lax = 'Lax',
+  /**
+   * Cookies will only be sent in a first-party context and not be sent along
+   * with requests initiated by third party websites.
+   */
+  Strict = 'Strict',
+}
+
+/**
+ * `Cookie` represents a RFC6265 specification cookie.
+ * 
+ * Refer: https://www.rfc-editor.org/rfc/rfc6265
+ * MDN Documentation: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie
+ */
 export class Cookie {
   private _name: string;
   private _value: string;
@@ -7,11 +36,11 @@ export class Cookie {
   private _path: string;
   private _secure: boolean;
   private _httpOnly: boolean;
-  private _sameSite: boolean;
+  private _sameSite: SameSite;
 
-  constructor(name: string, value: string) {
-    this._name = name;
-    this._value = value;
+  constructor() {
+    this._name = null;
+    this._value = null;
     this._expires = null;
     this._maxAge = null;
     this._domain = null;
@@ -53,29 +82,67 @@ export class Cookie {
     return this._httpOnly;
   }
 
-  get sameSite(): boolean {
+  /**
+   * Allows you to declare if your cookie should be restricted to a
+   * first-party or same-site context.
+   */
+  get sameSite(): SameSite {
     return this._sameSite;
   }
 
+  /**
+   * A <cookie-name> can contain any US-ASCII characters except for: the
+   * control character, space, or a tab. It also must not contain a separator
+   * characters like the following: ( ) < > @ , ; : \ " / [ ] ? = { }.
+   */
+  setName(name: string): void {
+    throw new Error('Not implemented!');
+  }
+
+  /**
+   * A <cookie-value> can optionally be wrapped in double quotes and include
+   * any US-ASCII character excluding a control character, Whitespace, double
+   * quotes, comma, semicolon, and backslash.
+   */
+  setValue(value: string): void {
+    throw new Error('Not implemented!');
+  }
+
   toString(): string {
+    if (this._value === null || this._name === null) {
+      throw new Error('Invalid Cookie. You must provide a name and a value for your Cookie.');
+    }
+
     const parts = [`${this._name}=${this._value}`];
 
     if (this._expires !== null) {
-      parts.push(`expires=${this._expires.toUTCString()}`);
+      parts.push(`Expires=${this._expires.toUTCString()}`);
     }
 
     if (this._maxAge !== null) {
-      parts.push(`max-age=${this._maxAge}`)
+      parts.push(`Max-Age=${this._maxAge}`)
     }
 
     if (this._domain !== null) {
-      parts.push(`domain=${this._domain}`);
+      parts.push(`Domain=${this._domain}`);
     }
 
     if (this._path !== null) {
-      parts.push(`path=${this._path}`)
+      parts.push(`Path=${this._path}`)
     }
 
-    return parts.join(';');
+    if (this._secure !== null) {
+      parts.push('Secure');
+    }
+
+    if (this._httpOnly === true) {
+      parts.push('HttpOnly');
+    }
+
+    if (this._sameSite !== null) {
+      parts.push(`SameSite=${this._sameSite.toString()}`);
+    }
+
+    return parts.join('; ');
   }
 }
