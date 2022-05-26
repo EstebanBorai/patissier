@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "coverage": "vitest --config ./vitest.config.ts run --coverage",
+    "test": "vitest --config ./vitest.config.ts"
+  },
+  "devDependencies": {
+    "vitest": "^0.12.9"
+  }
+}

@@ -1,4 +1,29 @@
 /**
+ * A map of characters and their Unicode charcode to avoid executing
+ * `String.prototype.charCodeAt` on every `String` when running validations.
+ */
+const CHAR_CODES = {
+  ' ': 32,
+  '"': 34,
+  '(': 40,
+  ')': 41,
+  ',': 44,
+  '/': 47,
+  ':': 58,
+  ';': 59,
+  '<': 60,
+  '=': 61,
+  '>': 62,
+  '?': 63,
+  '@': 64,
+  '[': 91,
+  '\\': 92,
+  ']': 93,
+  '{': 123,
+  '}': 125,
+}
+
+/**
  * Values supported by the `SameSite` attribute.
  */
 export enum SameSite {
@@ -96,7 +121,14 @@ export class Cookie {
    * characters like the following: ( ) < > @ , ; : \ " / [ ] ? = { }.
    */
   setName(name: string): void {
-    throw new Error('Not implemented!');
+    const isValid = Cookie.bytes(name).every(Cookie.isAllowedNameByte);
+
+    if (isValid) {
+      this._name = name;
+      return;
+    }
+
+    throw new Error('Invalid cookie name provided');
   }
 
   /**
@@ -105,7 +137,14 @@ export class Cookie {
    * quotes, comma, semicolon, and backslash.
    */
   setValue(value: string): void {
-    throw new Error('Not implemented!');
+    const isValid = Cookie.bytes(value).every(Cookie.isAllowedValueByte);
+
+    if (isValid) {
+      this._value = value;
+      return;
+    }
+
+    throw new Error('Invalid cookie value provided');
   }
 
   toString(): string {
@@ -144,5 +183,44 @@ export class Cookie {
     }
 
     return parts.join('; ');
+  }
+
+  private static bytes(str: string): Uint8Array {
+    const bytes = Uint8Array.from(str.split('').map(x => x.charCodeAt(0)));
+
+    return bytes;
+  }
+
+  private static isAllowedNameByte(byte: number): boolean {
+    return 0x20 <= byte && byte < 0x7f &&
+      byte != CHAR_CODES['"'] &&
+      byte != CHAR_CODES[';'] &&
+      byte != CHAR_CODES['\\'] &&
+      byte != CHAR_CODES[' '] &&
+      byte != CHAR_CODES['('] &&
+      byte != CHAR_CODES[')'] &&
+      byte != CHAR_CODES['<'] &&
+      byte != CHAR_CODES['>'] &&
+      byte != CHAR_CODES['@'] &&
+      byte != CHAR_CODES[','] &&
+      byte != CHAR_CODES[';'] &&
+      byte != CHAR_CODES[':'] &&
+      byte != CHAR_CODES['\\'] &&
+      byte != CHAR_CODES['"'] &&
+      byte != CHAR_CODES['/'] &&
+      byte != CHAR_CODES['['] &&
+      byte != CHAR_CODES[']'] &&
+      byte != CHAR_CODES['?'] &&
+      byte != CHAR_CODES['='] &&
+      byte != CHAR_CODES['{'] &&
+      byte != CHAR_CODES['}'];
+  }
+
+  private static isAllowedValueByte(byte: number): boolean {
+    return 0x20 <= byte && byte < 0x7f &&
+      byte != CHAR_CODES['"'] &&
+      byte != CHAR_CODES[';'] &&
+      byte != CHAR_CODES['\\'] &&
+      byte != CHAR_CODES[' '];
   }
 }
