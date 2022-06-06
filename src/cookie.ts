@@ -165,6 +165,19 @@ export class Cookie {
     this._sameSite = value;
   }
 
+  /**
+   * Sets the `Expires` attribute for the cookie.
+   * 
+   * The `Expires` attribute specifies the deadline of the cookie. This date
+   * instance is relative to the client's system clock and not the server's.
+   * 
+   * If this value is not specified, the cookie becomes a session cookie, which
+   * means that the cookie wont persist when the client shut down.
+   */
+  setExpires(date: Date): void {
+    this._expires = date;
+  }
+
   toString(): string {
     if (this._value === null || this._name === null) {
       throw new Error('Invalid Cookie. You must provide a name and a value for your Cookie.');
@@ -200,7 +213,7 @@ export class Cookie {
       parts.push(`SameSite=${this._sameSite.toString()}`);
     }
 
-    return parts.join(';');
+    return parts.join('; ');
   }
 
   private static bytes(str: string): Uint8Array {

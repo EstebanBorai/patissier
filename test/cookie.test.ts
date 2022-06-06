@@ -89,6 +89,17 @@ describe('cookie', () => {
     expect(cookie.toString()).toStrictEqual(`token=${jwtToken}`);
   });
 
+  it('creates a cookie with expirity date', () => {
+    const now = new Date();
+    const cookie = new Cookie();
+
+    cookie.setName('pieCookingTime');
+    cookie.setValue('thePieWillBeReadyWhenTheCookieExpires');
+    cookie.setExpires(now);
+
+    expect(cookie.toString()).toStrictEqual(`pieCookingTime=thePieWillBeReadyWhenTheCookieExpires; Expires=${now.toUTCString()}`);
+  });
+
   it('creates a cookie with same-site lax', () => {
     const cookie = new Cookie();
     const jwtToken = 'someJwtToken';
@@ -97,7 +108,7 @@ describe('cookie', () => {
     cookie.setValue(jwtToken);
     cookie.setSameSite(SameSite.Lax);
 
-    expect(cookie.toString()).toStrictEqual(`token=${jwtToken};SameSite=Lax`);
+    expect(cookie.toString()).toStrictEqual(`token=${jwtToken}; SameSite=Lax`);
   });
 
   it('creates a cookie with same-site none', () => {
@@ -108,7 +119,7 @@ describe('cookie', () => {
     cookie.setValue(jwtToken);
     cookie.setSameSite(SameSite.None);
 
-    expect(cookie.toString()).toStrictEqual(`token=${jwtToken};SameSite=None`);
+    expect(cookie.toString()).toStrictEqual(`token=${jwtToken}; SameSite=None`);
   });
 
   it('creates a cookie with same-site strict', () => {
@@ -119,6 +130,6 @@ describe('cookie', () => {
     cookie.setValue(jwtToken);
     cookie.setSameSite(SameSite.Strict);
 
-    expect(cookie.toString()).toStrictEqual(`token=${jwtToken};SameSite=Strict`);
+    expect(cookie.toString()).toStrictEqual(`token=${jwtToken}; SameSite=Strict`);
   });
 });
