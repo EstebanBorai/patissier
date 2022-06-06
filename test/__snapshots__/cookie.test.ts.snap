@@ -1,0 +1,5 @@
+// Vitest Snapshot v1
+
+exports[`cookie > complains when an unexpected data type is provided for expires 1`] = `"Expected a \\"Date\\" instance. But received \\"String\\" instead."`;
+
+exports[`cookie > complains when an unexpected data type is provided for max-age 1`] = `"Expected a value of type \\"number\\". But received \\"Date\\" instead."`;

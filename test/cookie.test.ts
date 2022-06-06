@@ -100,6 +100,18 @@ describe('cookie', () => {
     expect(cookie.toString()).toStrictEqual(`pieCookingTime=thePieWillBeReadyWhenTheCookieExpires; Expires=${now.toUTCString()}`);
   });
 
+  it('complains when an unexpected data type is provided for expires', () => {
+    expect.assertions(2);
+
+    const cookie = new Cookie();
+
+    cookie.setName('pieCookingTime');
+    cookie.setValue('thePieWillBeReadyWhenTheCookieExpires');
+
+    expect(() => cookie.setExpires(String("Hello") as unknown as Date)).toThrowError(TypeError);
+    expect(() => cookie.setExpires(String("Hello") as unknown as Date)).toThrowErrorMatchingSnapshot();
+  });
+
   it('creates a cookie with same-site lax', () => {
     const cookie = new Cookie();
     const jwtToken = 'someJwtToken';
@@ -131,5 +143,27 @@ describe('cookie', () => {
     cookie.setSameSite(SameSite.Strict);
 
     expect(cookie.toString()).toStrictEqual(`token=${jwtToken}; SameSite=Strict`);
+  });
+
+  it('creates a cookie with max-age', () => {
+    const cookie = new Cookie();
+
+    cookie.setName('pieCookingTime');
+    cookie.setValue('thePieWillBeReadyWhenTheCookieExpires');
+    cookie.setMaxAge(10000);
+
+    expect(cookie.toString()).toStrictEqual(`pieCookingTime=thePieWillBeReadyWhenTheCookieExpires; Max-Age=10000`);
+  });
+
+  it('complains when an unexpected data type is provided for max-age', () => {
+    expect.assertions(2);
+
+    const cookie = new Cookie();
+
+    cookie.setName('pieCookingTime');
+    cookie.setValue('thePieWillBeReadyWhenTheCookieExpires');
+
+    expect(() => cookie.setMaxAge(new Date() as unknown as number)).toThrowError(TypeError);
+    expect(() => cookie.setMaxAge(new Date() as unknown as number)).toThrowErrorMatchingSnapshot();
   });
 });

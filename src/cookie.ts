@@ -175,7 +175,32 @@ export class Cookie {
    * means that the cookie wont persist when the client shut down.
    */
   setExpires(date: Date): void {
-    this._expires = date;
+    if (date instanceof Date) {
+      this._expires = date;
+      return;
+    }
+
+    throw new TypeError(`Expected a "Date" instance. But received "${date?.['constructor']?.['name'] || typeof date}" instead.`);
+  }
+
+  /**
+   * Sets the `Max-Age` attribute for the cookie.
+   *
+   * The `Max-Age` attribute accepts a number representing the TTL in seconds
+   * for the cookie. Whenever a 0 or negative value is provided, the cookie
+   * will be considered as expired.
+   * 
+   * Is important to note, that `Max-Age` has precedence over `Expires`, this
+   * means, that if both attibutes are present, `Max-Age` will defne the final
+   * behavior.
+   */
+  setMaxAge(seconds: number): void {
+    if (typeof seconds === 'number') {
+      this._maxAge = seconds;
+      return;
+    }
+
+    throw new TypeError(`Expected a value of type "number". But received "${seconds?.['constructor']?.['name'] || typeof seconds}" instead.`);
   }
 
   toString(): string {
