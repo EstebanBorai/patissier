@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { Cookie } from '../src';
+import { SameSite } from '../src/cookie';
 
 describe('cookie', () => {
   it('creates a cookie with all attributes as null by default', () => {
@@ -76,5 +77,48 @@ describe('cookie', () => {
     ]);
 
     expect(uint8).toEqual(expec);
+  });
+
+  it('creates a cookie w/o any attributes', () => {
+    const cookie = new Cookie();
+    const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+
+    cookie.setName('token');
+    cookie.setValue(jwtToken);
+
+    expect(cookie.toString()).toStrictEqual(`token=${jwtToken}`);
+  });
+
+  it('creates a cookie with same-site lax', () => {
+    const cookie = new Cookie();
+    const jwtToken = 'someJwtToken';
+
+    cookie.setName('token');
+    cookie.setValue(jwtToken);
+    cookie.setSameSite(SameSite.Lax);
+
+    expect(cookie.toString()).toStrictEqual(`token=${jwtToken};SameSite=Lax`);
+  });
+
+  it('creates a cookie with same-site none', () => {
+    const cookie = new Cookie();
+    const jwtToken = 'someJwtToken';
+
+    cookie.setName('token');
+    cookie.setValue(jwtToken);
+    cookie.setSameSite(SameSite.None);
+
+    expect(cookie.toString()).toStrictEqual(`token=${jwtToken};SameSite=None`);
+  });
+
+  it('creates a cookie with same-site strict', () => {
+    const cookie = new Cookie();
+    const jwtToken = 'someJwtToken';
+
+    cookie.setName('token');
+    cookie.setValue(jwtToken);
+    cookie.setSameSite(SameSite.Strict);
+
+    expect(cookie.toString()).toStrictEqual(`token=${jwtToken};SameSite=Strict`);
   });
 });

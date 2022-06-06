@@ -147,6 +147,24 @@ export class Cookie {
     throw new Error('Invalid cookie value provided');
   }
 
+  /**
+   * Declare wether the cookie should be restricted to a first-party or
+   * same-site context.
+   *
+   * - If Same-Site is not specified, then it defaults to `Lax`.
+   *
+   * - If the cookie's `SameSite` attribute's value is `None`, then the `Secure`
+   * attribute must be specified.
+   *
+   * - If the cookie is sent to the same domain but with a different scheme,
+   * then it wont be sent.
+   *
+   * Refer: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite
+   */
+  setSameSite(value: SameSite): void {
+    this._sameSite = value;
+  }
+
   toString(): string {
     if (this._value === null || this._name === null) {
       throw new Error('Invalid Cookie. You must provide a name and a value for your Cookie.');
@@ -182,7 +200,7 @@ export class Cookie {
       parts.push(`SameSite=${this._sameSite.toString()}`);
     }
 
-    return parts.join('; ');
+    return parts.join(';');
   }
 
   private static bytes(str: string): Uint8Array {
