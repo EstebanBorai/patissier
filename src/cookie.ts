@@ -24,6 +24,16 @@ const CHAR_CODES = {
 }
 
 /**
+ * Regular Expression to validate domains provided to the `domain` cookie
+ * attribute.
+ *
+ * Earlier specifications for the cookie domain, allowed the preceding dot,
+ * but most recent versions ignore the preceding dot. This implementation
+ * supports it to provide backwards compatibility.
+ */
+export const DOMAIN_REGEXP = /^(\.)?((?:(?:(?:\w[\.\-\+]?)*)\w)+)((?:(?:(?:\w[\.\-\+]?){0,62})\w)+)\.(\w{2,6})$/;
+
+/**
  * Values supported by the `SameSite` attribute.
  */
 export enum SameSite {
@@ -201,6 +211,20 @@ export class Cookie {
     }
 
     throw new TypeError(`Expected a value of type "number". But received "${seconds?.['constructor']?.['name'] || typeof seconds}" instead.`);
+  }
+
+  /**
+   * Defines the host to which the cookie will be sent.
+   * 
+   * NOTE: Leading dots in domain names (.example.com) are ignored.
+   */
+  setDomain(domain: string): void {
+    if (DOMAIN_REGEXP.test(domain)) {
+      this._domain = domain;
+      return;
+    }
+
+    throw new Error('Invalid domain provided.');
   }
 
   toString(): string {

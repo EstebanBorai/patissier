@@ -100,7 +100,7 @@ describe('cookie', () => {
     expect(cookie.toString()).toStrictEqual(`pieCookingTime=thePieWillBeReadyWhenTheCookieExpires; Expires=${now.toUTCString()}`);
   });
 
-  it('complains when an unexpected data type is provided for expires', () => {
+  it('complains when a unexpected data type is provided for expires', () => {
     expect.assertions(2);
 
     const cookie = new Cookie();
@@ -155,7 +155,7 @@ describe('cookie', () => {
     expect(cookie.toString()).toStrictEqual(`pieCookingTime=thePieWillBeReadyWhenTheCookieExpires; Max-Age=10000`);
   });
 
-  it('complains when an unexpected data type is provided for max-age', () => {
+  it('complains when a unexpected data type is provided for max-age', () => {
     expect.assertions(2);
 
     const cookie = new Cookie();
@@ -165,5 +165,30 @@ describe('cookie', () => {
 
     expect(() => cookie.setMaxAge(new Date() as unknown as number)).toThrowError(TypeError);
     expect(() => cookie.setMaxAge(new Date() as unknown as number)).toThrowErrorMatchingSnapshot();
+  });
+
+  it('creates a cookie with valid domain provided', () => {
+    const domains = [
+      'example.com',
+      '.example.com',
+      '.example.com/',
+      '.example.com/foo',
+      'hello-world.com',
+      '.hello-world.com',
+      '.hello-world.com/bar',
+    ];
+
+    expect.assertions(domains.length);
+
+    for (let i = 0; i < domains.length; i++) {
+      const domain = domains[i];
+      const cookie = new Cookie();
+
+      cookie.setName('testingDomains');
+      cookie.setValue('domains');
+
+      expect(() => cookie.setDomain(domain)).not.toThrow();
+      expect(cookie.toString()).toStrictEqual(`testingDomains=domains; Domain=${domain}`);
+    }
   });
 });
