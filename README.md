@@ -50,7 +50,7 @@ npm install cookie-builder
 
 ## Documentation
 
-## `Cookie`
+### `Cookie`
 
 The `Cookie` class is responsible of validating and creating HTTP cookies.
 Whenever a new `Cookie` instance is created, all of the attributes will be set
@@ -67,15 +67,15 @@ attributes, you must use any of the `set*` like methods exposed by `Cookie`.
 This is intended to protect values set to the `Cookie` instance to warranty
 that the cookie cant be built with invalid attribute values.
 
-### `Cookie.setName(name: string): void`
+#### `Cookie.setName(name: string): void`
 
 Sets the cookie name.
 
-### `Cookie.setValue(value: string): void`
+#### `Cookie.setValue(value: string): void`
 
 Sets the cookie value.
 
-### `Cookie.setSameSite(value: SameSite): void`
+#### `Cookie.setSameSite(value: SameSite): void`
 
 Sets the cookie `SameSite` attribute.
 
@@ -85,16 +85,16 @@ same-site context.
 - If Same-Site is not specified, then it defaults to `Lax`.
 
 - If the cookie's `SameSite` attribute's value is `None`, then the `Secure`
-attribute must be specified.
+  attribute must be specified.
 
 - If the cookie is sent to the same domain but with a different scheme, then
-it wont be sent.
+  it wont be sent.
 
 > **Warning**: You must provide a variant from the `SameSite` `enum` exported by this library.
 
 [Read more on MDN][2]
 
-### `Cookie.setExpires(date: Date): void`
+#### `Cookie.setExpires(date: Date): void`
 
     Sets the `Expires` attribute for the cookie.
 
@@ -104,7 +104,7 @@ it wont be sent.
     If this value is not specified, the cookie becomes a session cookie, which
     means that the cookie wont persist when the client shut down.
 
-### `Cookie.setMaxAge(seconds: number): void`
+#### `Cookie.setMaxAge(seconds: number): void`
 
 Sets the `Max-Age` attribute for the cookie.
 
@@ -116,13 +116,13 @@ Is important to note, that `Max-Age` has precedence over `Expires`, this
 means, that if both attibutes are present, `Max-Age` will defne the final
 behavior.
 
-### `Cookie.setDomain(domain: string): void`
+#### `Cookie.setDomain(domain: string): void`
 
     Defines the host to which the cookie will be sent.
 
 > **Warning**: Leading dots in domain names (`.example.com`) are ignored. This is specified in most recent spects. This library WILL NOT remove any leading dots from the input.
 
-### `Cookie.setPath(path: string): void`
+#### `Cookie.setPath(path: string): void`
 
 Indicates a URL path that must exist in the requested URL in order to send
 the Cookie header.
@@ -131,7 +131,7 @@ and subdirectories match as well.
 
 [Read more on MDN][3]
 
-### `Cookie.setSecure(isSecure: boolean): void`
+#### `Cookie.setSecure(isSecure: boolean): void`
 
 Sets the `Secure` attribute for the Cookie.
 
@@ -140,18 +140,18 @@ encrypted request over the HTTPS protocol. It's never sent with unsecured
 HTTP (except on localhost), which means man-in-the-middle attackers can't
 access it easily.
 
-### `Cookie.setHttpOnly(isHttpOnly: boolean): void`
+#### `Cookie.setHttpOnly(isHttpOnly: boolean): void`
 
 A cookie with the `HttpOnly` attribute is inaccessible to the JavaScript
 `Document.cookie` API; it's only sent to the server.
 
 [Read more on MDN][3]
 
-### `Cookie.toString(): string`
+#### `Cookie.toString(): string`
 
 Builds a HTTP Cookie with the current attributes.
 
-## `CookieBuilder`
+### `CookieBuilder`
 
 The `CookieBuilder` `class` is built around the `Cookie`
 API. Most of the methods exposed by the `CookieBuilder` have the same input
@@ -163,11 +163,11 @@ build a `Cookie` instance on a single line.
 
 Similar to `Cookie`, all attributes remain `null` by default.
 
-### `CookieBuilder.secure(): CookieBuilder`
+#### `CookieBuilder.secure(): CookieBuilder`
 
 Sets the `Secure` attribute for the underlying `Cookie`.
 
-### `CookieBuilder.httpOnly(): CookieBuilder`
+#### `CookieBuilder.httpOnly(): CookieBuilder`
 
 Sets the `HttpOnly` attribute for the underlying `Cookie`.
 
