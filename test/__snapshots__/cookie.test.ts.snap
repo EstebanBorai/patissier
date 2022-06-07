@@ -1,5 +1,9 @@
 // Vitest Snapshot v1
 
+exports[`cookie > complains if the argument to \`setPath\` doest starts with forward slash (/) 1`] = `"Invalid value provided to \`Path\`. Expected a string prefixed with the forward slash character. E.g. \`/docs\`."`;
+
+exports[`cookie > complains if the argument to \`setPath\` is not an instance of string 1`] = `"Expected a value of type \\"string\\". But received \\"Number\\" instead."`;
+
 exports[`cookie > complains when a unexpected data type is provided for expires 1`] = `"Expected a \\"Date\\" instance. But received \\"String\\" instead."`;
 
 exports[`cookie > complains when a unexpected data type is provided for max-age 1`] = `"Expected a value of type \\"number\\". But received \\"Date\\" instead."`;

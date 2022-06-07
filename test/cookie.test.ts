@@ -176,4 +176,41 @@ describe('cookie', () => {
       cookie.setMaxAge(new Date() as unknown as number),
     ).toThrowErrorMatchingSnapshot();
   });
+
+  it('creates a cookie with path', () => {
+    const cookie = new Cookie();
+
+    cookie.setName('token');
+    cookie.setValue('coolToken');
+    cookie.setPath('/account');
+
+    expect(cookie.toString()).toStrictEqual(`token=coolToken; Path=/account`);
+  });
+
+  it('complains if the argument to `setPath` doest starts with forward slash (/)', () => {
+    const cookie = new Cookie();
+
+    cookie.setName('token');
+    cookie.setValue('coolToken');
+
+    expect.assertions(2);
+    expect(() => cookie.setPath('cookies')).toThrowError(
+      'Invalid value provided to `Path`. Expected a string prefixed with the forward slash character. E.g. `/docs`.',
+    );
+    expect(() => cookie.setPath('cookies')).toThrowErrorMatchingSnapshot();
+  });
+
+  it('complains if the argument to `setPath` is not an instance of string', () => {
+    const cookie = new Cookie();
+
+    cookie.setName('token');
+    cookie.setValue('coolToken');
+
+    expect(() => cookie.setPath(1 as unknown as string)).toThrowError(
+      'Expected a value of type "string". But received "Number" instead.',
+    );
+    expect(() =>
+      cookie.setPath(1 as unknown as string),
+    ).toThrowErrorMatchingSnapshot();
+  });
 });

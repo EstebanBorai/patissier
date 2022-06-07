@@ -236,6 +236,34 @@ export class Cookie {
     throw new Error('Invalid domain provided.');
   }
 
+  /**
+   * Indicates a URL path that must exist in the requested URL in order to send
+   * the Cookie header.
+   *
+   * The `/` (`%x2F`) character is considered a directory separator,
+   * and subdirectories match as well.
+   *
+   * Refer: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
+   */
+  setPath(path: string): void {
+    if (typeof path === 'string') {
+      if (path.charCodeAt(0) === CHAR_CODES['/']) {
+        this._path = path;
+        return;
+      }
+
+      throw new Error(
+        'Invalid value provided to `Path`. Expected a string prefixed with the forward slash character. E.g. `/docs`.',
+      );
+    }
+
+    throw new TypeError(
+      `Expected a value of type "string". But received "${
+        path?.['constructor']?.['name'] || typeof path
+      }" instead.`,
+    );
+  }
+
   toString(): string {
     if (this._value === null || this._name === null) {
       throw new Error(
