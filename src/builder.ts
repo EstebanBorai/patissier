@@ -70,12 +70,18 @@ export class CookieBuilder {
     return this;
   }
 
+  /**
+   * Sets the `Secure` attribute for the underlying `Cookie`.
+   */
   secure(): CookieBuilder {
     this._cookie.setSecure(true);
 
     return this;
   }
 
+  /**
+   * Sets the `HttpOnly` attribute for the underlying `Cookie`.
+   */
   httpOnly(): CookieBuilder {
     this._cookie.setHttpOnly(true);
 

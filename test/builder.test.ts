@@ -71,4 +71,21 @@ describe('CookieBuilder', () => {
 
     expect(builder['_cookie']['_secure']).toStrictEqual(true);
   });
+
+  it('builds a cookie into a string', () => {
+    const cookie = new CookieBuilder()
+      .name('pepperoni')
+      .value('pizza_is_so_good')
+      .sameSite(SameSite.Lax)
+      .maxAge(12 * 24 * 60 * 60)
+      .domain('example.com')
+      .path('/')
+      .secure()
+      .httpOnly()
+      .build();
+
+    expect(cookie.toString()).toStrictEqual(
+      'pepperoni=pizza_is_so_good; Max-Age=1036800; Domain=example.com; Path=/; Secure; HttpOnly; SameSite=Lax',
+    );
+  });
 });

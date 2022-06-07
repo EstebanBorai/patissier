@@ -128,10 +128,6 @@ export class Cookie {
 
   /**
    * Sets the cookie name.
-   *
-   * A <cookie-name> can contain any US-ASCII characters except for: the
-   * control character, space, or a tab. It also must not contain a separator
-   * characters like the following: ( ) < > @ , ; : \ " / [ ] ? = { }.
    */
   setName(name: string): void {
     const isValid = Cookie.bytes(name).every(Cookie.isAllowedNameByte);
@@ -145,9 +141,7 @@ export class Cookie {
   }
 
   /**
-   * A <cookie-value> can optionally be wrapped in double quotes and include
-   * any US-ASCII character excluding a control character, Whitespace, double
-   * quotes, comma, semicolon, and backslash.
+   * Sets cookie value.
    */
   setValue(value: string): void {
     const isValid = Cookie.bytes(value).every(Cookie.isAllowedValueByte);
@@ -228,6 +222,8 @@ export class Cookie {
    * Defines the host to which the cookie will be sent.
    *
    * NOTE: Leading dots in domain names (.example.com) are ignored.
+   * This is specified in most recent spects. This library WILL NOT remove
+   * any leading dots from the input.
    */
   setDomain(domain: string): void {
     if (DOMAIN_REGEXP.test(domain)) {
@@ -308,6 +304,9 @@ export class Cookie {
     );
   }
 
+  /**
+   * Builds a HTTP Cookie with the current attributes.
+   */
   toString(): string {
     if (this._value === null || this._name === null) {
       throw new Error(
