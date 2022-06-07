@@ -127,6 +127,8 @@ export class Cookie {
   }
 
   /**
+   * Sets the cookie name.
+   *
    * A <cookie-name> can contain any US-ASCII characters except for: the
    * control character, space, or a tab. It also must not contain a separator
    * characters like the following: ( ) < > @ , ; : \ " / [ ] ? = { }.

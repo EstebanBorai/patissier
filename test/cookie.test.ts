@@ -1,9 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { Cookie } from '../src';
-import { SameSite } from '../src/cookie';
+import { Cookie, SameSite } from '../src';
 
-describe('cookie', () => {
+describe('Cookie', () => {
   it('creates a cookie with all attributes as null by default', () => {
     const cookie = new Cookie();
 
