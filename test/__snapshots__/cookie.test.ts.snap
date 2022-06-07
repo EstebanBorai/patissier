@@ -1,5 +1,7 @@
 // Vitest Snapshot v1
 
+exports[`cookie > complains if the argument to \`setHttpOnly\` is not an instance of boolean 1`] = `"Expected a value of type \\"boolean\\". But received \\"Number\\" instead."`;
+
 exports[`cookie > complains if the argument to \`setPath\` doest starts with forward slash (/) 1`] = `"Invalid value provided to \`Path\`. Expected a string prefixed with the forward slash character. E.g. \`/docs\`."`;
 
 exports[`cookie > complains if the argument to \`setPath\` is not an instance of string 1`] = `"Expected a value of type \\"string\\". But received \\"Number\\" instead."`;

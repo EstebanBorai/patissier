@@ -237,4 +237,28 @@ describe('cookie', () => {
       cookie.setSecure(1 as unknown as boolean),
     ).toThrowErrorMatchingSnapshot();
   });
+
+  it('creates a cookie with http only attribute', () => {
+    const cookie = new Cookie();
+
+    cookie.setName('token');
+    cookie.setValue('coolToken');
+    cookie.setHttpOnly(true);
+
+    expect(cookie.toString()).toStrictEqual(`token=coolToken; HttpOnly`);
+  });
+
+  it('complains if the argument to `setHttpOnly` is not an instance of boolean', () => {
+    const cookie = new Cookie();
+
+    cookie.setName('token');
+    cookie.setValue('coolToken');
+
+    expect(() => cookie.setHttpOnly(1 as unknown as boolean)).toThrowError(
+      'Expected a value of type "boolean". But received "Number" instead.',
+    );
+    expect(() =>
+      cookie.setHttpOnly(1 as unknown as boolean),
+    ).toThrowErrorMatchingSnapshot();
+  });
 });

@@ -267,7 +267,7 @@ export class Cookie {
   /**
    * Sets the `Secure` attribute for the Cookie.
    *
-   * A cookie with the Secure attribute is only sent to the server with an
+   * A cookie with the `Secure` attribute is only sent to the server with an
    * encrypted request over the HTTPS protocol. It's never sent with unsecured
    * HTTP (except on localhost), which means man-in-the-middle attackers can't
    * access it easily.
@@ -283,6 +283,25 @@ export class Cookie {
     throw new TypeError(
       `Expected a value of type "boolean". But received "${
         isSecure?.['constructor']?.['name'] || typeof isSecure
+      }" instead.`,
+    );
+  }
+
+  /**
+   * A cookie with the `HttpOnly`` attribute is inaccessible to the JavaScript
+   * `Document.cookie`` API; it's only sent to the server.
+   *
+   * Refer: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#restrict_access_to_cookies
+   */
+  setHttpOnly(isHttpOnly: boolean): void {
+    if (typeof isHttpOnly === 'boolean') {
+      this._httpOnly = isHttpOnly;
+      return;
+    }
+
+    throw new TypeError(
+      `Expected a value of type "boolean". But received "${
+        isHttpOnly?.['constructor']?.['name'] || typeof isHttpOnly
       }" instead.`,
     );
   }
