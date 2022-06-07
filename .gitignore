@@ -1,6 +1,5 @@
 .cache
 .DS_Store
-.svelte-kit
 .env
 .env.*
 !.env.example

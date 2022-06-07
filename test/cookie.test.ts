@@ -40,8 +40,11 @@ describe('cookie', () => {
     ];
 
     expect.assertions(invalidCookieNames.length);
-    invalidCookieNames.forEach((val) => expect(() => cookie.setName(val))
-        .toThrowError(/^Invalid cookie name provided$/));
+    invalidCookieNames.forEach((val) =>
+      expect(() => cookie.setName(val)).toThrowError(
+        /^Invalid cookie name provided$/,
+      ),
+    );
   });
 
   it('complains on invalid cookie values provided', () => {
@@ -54,26 +57,18 @@ describe('cookie', () => {
     ];
 
     expect.assertions(invalidCookieValues.length);
-    invalidCookieValues.forEach((val) => expect(() => cookie.setValue(val))
-      .toThrowError(/^Invalid cookie value provided$/));
+    invalidCookieValues.forEach((val) =>
+      expect(() => cookie.setValue(val)).toThrowError(
+        /^Invalid cookie value provided$/,
+      ),
+    );
   });
 
   it('parses string into byte array', () => {
     const bytes = Cookie['bytes'];
     const uint8 = bytes('Hello World!');
     const expec = new Uint8Array([
-      72,
-      101,
-      108,
-      108,
-      111,
-      32,
-      87,
-      111,
-      114,
-      108,
-      100,
-      33,
+      72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100, 33,
     ]);
 
     expect(uint8).toEqual(expec);
@@ -81,7 +76,8 @@ describe('cookie', () => {
 
   it('creates a cookie w/o any attributes', () => {
     const cookie = new Cookie();
-    const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+    const jwtToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 
     cookie.setName('token');
     cookie.setValue(jwtToken);
@@ -97,7 +93,9 @@ describe('cookie', () => {
     cookie.setValue('thePieWillBeReadyWhenTheCookieExpires');
     cookie.setExpires(now);
 
-    expect(cookie.toString()).toStrictEqual(`pieCookingTime=thePieWillBeReadyWhenTheCookieExpires; Expires=${now.toUTCString()}`);
+    expect(cookie.toString()).toStrictEqual(
+      `pieCookingTime=thePieWillBeReadyWhenTheCookieExpires; Expires=${now.toUTCString()}`,
+    );
   });
 
   it('complains when a unexpected data type is provided for expires', () => {
@@ -108,8 +106,12 @@ describe('cookie', () => {
     cookie.setName('pieCookingTime');
     cookie.setValue('thePieWillBeReadyWhenTheCookieExpires');
 
-    expect(() => cookie.setExpires(String("Hello") as unknown as Date)).toThrowError(TypeError);
-    expect(() => cookie.setExpires(String("Hello") as unknown as Date)).toThrowErrorMatchingSnapshot();
+    expect(() =>
+      cookie.setExpires(String('Hello') as unknown as Date),
+    ).toThrowError(TypeError);
+    expect(() =>
+      cookie.setExpires(String('Hello') as unknown as Date),
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it('creates a cookie with same-site lax', () => {
@@ -142,7 +144,9 @@ describe('cookie', () => {
     cookie.setValue(jwtToken);
     cookie.setSameSite(SameSite.Strict);
 
-    expect(cookie.toString()).toStrictEqual(`token=${jwtToken}; SameSite=Strict`);
+    expect(cookie.toString()).toStrictEqual(
+      `token=${jwtToken}; SameSite=Strict`,
+    );
   });
 
   it('creates a cookie with max-age', () => {
@@ -152,7 +156,9 @@ describe('cookie', () => {
     cookie.setValue('thePieWillBeReadyWhenTheCookieExpires');
     cookie.setMaxAge(10000);
 
-    expect(cookie.toString()).toStrictEqual(`pieCookingTime=thePieWillBeReadyWhenTheCookieExpires; Max-Age=10000`);
+    expect(cookie.toString()).toStrictEqual(
+      `pieCookingTime=thePieWillBeReadyWhenTheCookieExpires; Max-Age=10000`,
+    );
   });
 
   it('complains when a unexpected data type is provided for max-age', () => {
@@ -163,32 +169,11 @@ describe('cookie', () => {
     cookie.setName('pieCookingTime');
     cookie.setValue('thePieWillBeReadyWhenTheCookieExpires');
 
-    expect(() => cookie.setMaxAge(new Date() as unknown as number)).toThrowError(TypeError);
-    expect(() => cookie.setMaxAge(new Date() as unknown as number)).toThrowErrorMatchingSnapshot();
-  });
-
-  it('creates a cookie with valid domain provided', () => {
-    const domains = [
-      'example.com',
-      '.example.com',
-      '.example.com/',
-      '.example.com/foo',
-      'hello-world.com',
-      '.hello-world.com',
-      '.hello-world.com/bar',
-    ];
-
-    expect.assertions(domains.length);
-
-    for (let i = 0; i < domains.length; i++) {
-      const domain = domains[i];
-      const cookie = new Cookie();
-
-      cookie.setName('testingDomains');
-      cookie.setValue('domains');
-
-      expect(() => cookie.setDomain(domain)).not.toThrow();
-      expect(cookie.toString()).toStrictEqual(`testingDomains=domains; Domain=${domain}`);
-    }
+    expect(() =>
+      cookie.setMaxAge(new Date() as unknown as number),
+    ).toThrowError(TypeError);
+    expect(() =>
+      cookie.setMaxAge(new Date() as unknown as number),
+    ).toThrowErrorMatchingSnapshot();
   });
 });

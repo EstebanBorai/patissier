@@ -21,7 +21,7 @@ const CHAR_CODES = {
   ']': 93,
   '{': 123,
   '}': 125,
-}
+};
 
 /**
  * Regular Expression to validate domains provided to the `domain` cookie
@@ -31,7 +31,8 @@ const CHAR_CODES = {
  * but most recent versions ignore the preceding dot. This implementation
  * supports it to provide backwards compatibility.
  */
-export const DOMAIN_REGEXP = /^(\.)?((?:(?:(?:\w[\.\-\+]?)*)\w)+)((?:(?:(?:\w[\.\-\+]?){0,62})\w)+)\.(\w{2,6})$/;
+export const DOMAIN_REGEXP =
+  /^(\.)?((?:(?:(?:\w[.\-+]?)*)\w)+)((?:(?:(?:\w[.\-+]?){0,62})\w)+)\.(\w{2,6})$/;
 
 /**
  * Values supported by the `SameSite` attribute.
@@ -58,7 +59,7 @@ export enum SameSite {
 
 /**
  * `Cookie` represents a RFC6265 specification cookie.
- * 
+ *
  * Refer: https://www.rfc-editor.org/rfc/rfc6265
  * MDN Documentation: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie
  */
@@ -177,10 +178,10 @@ export class Cookie {
 
   /**
    * Sets the `Expires` attribute for the cookie.
-   * 
+   *
    * The `Expires` attribute specifies the deadline of the cookie. This date
    * instance is relative to the client's system clock and not the server's.
-   * 
+   *
    * If this value is not specified, the cookie becomes a session cookie, which
    * means that the cookie wont persist when the client shut down.
    */
@@ -190,7 +191,11 @@ export class Cookie {
       return;
     }
 
-    throw new TypeError(`Expected a "Date" instance. But received "${date?.['constructor']?.['name'] || typeof date}" instead.`);
+    throw new TypeError(
+      `Expected a "Date" instance. But received "${
+        date?.['constructor']?.['name'] || typeof date
+      }" instead.`,
+    );
   }
 
   /**
@@ -199,7 +204,7 @@ export class Cookie {
    * The `Max-Age` attribute accepts a number representing the TTL in seconds
    * for the cookie. Whenever a 0 or negative value is provided, the cookie
    * will be considered as expired.
-   * 
+   *
    * Is important to note, that `Max-Age` has precedence over `Expires`, this
    * means, that if both attibutes are present, `Max-Age` will defne the final
    * behavior.
@@ -210,12 +215,16 @@ export class Cookie {
       return;
     }
 
-    throw new TypeError(`Expected a value of type "number". But received "${seconds?.['constructor']?.['name'] || typeof seconds}" instead.`);
+    throw new TypeError(
+      `Expected a value of type "number". But received "${
+        seconds?.['constructor']?.['name'] || typeof seconds
+      }" instead.`,
+    );
   }
 
   /**
    * Defines the host to which the cookie will be sent.
-   * 
+   *
    * NOTE: Leading dots in domain names (.example.com) are ignored.
    */
   setDomain(domain: string): void {
@@ -229,7 +238,9 @@ export class Cookie {
 
   toString(): string {
     if (this._value === null || this._name === null) {
-      throw new Error('Invalid Cookie. You must provide a name and a value for your Cookie.');
+      throw new Error(
+        'Invalid Cookie. You must provide a name and a value for your Cookie.',
+      );
     }
 
     const parts = [`${this._name}=${this._value}`];
@@ -239,7 +250,7 @@ export class Cookie {
     }
 
     if (this._maxAge !== null) {
-      parts.push(`Max-Age=${this._maxAge}`)
+      parts.push(`Max-Age=${this._maxAge}`);
     }
 
     if (this._domain !== null) {
@@ -247,7 +258,7 @@ export class Cookie {
     }
 
     if (this._path !== null) {
-      parts.push(`Path=${this._path}`)
+      parts.push(`Path=${this._path}`);
     }
 
     if (this._secure !== null) {
@@ -266,13 +277,15 @@ export class Cookie {
   }
 
   private static bytes(str: string): Uint8Array {
-    const bytes = Uint8Array.from(str.split('').map(x => x.charCodeAt(0)));
+    const bytes = Uint8Array.from(str.split('').map((x) => x.charCodeAt(0)));
 
     return bytes;
   }
 
   private static isAllowedNameByte(byte: number): boolean {
-    return 0x20 <= byte && byte < 0x7f &&
+    return (
+      0x20 <= byte &&
+      byte < 0x7f &&
       byte != CHAR_CODES['"'] &&
       byte != CHAR_CODES[';'] &&
       byte != CHAR_CODES['\\'] &&
@@ -293,14 +306,18 @@ export class Cookie {
       byte != CHAR_CODES['?'] &&
       byte != CHAR_CODES['='] &&
       byte != CHAR_CODES['{'] &&
-      byte != CHAR_CODES['}'];
+      byte != CHAR_CODES['}']
+    );
   }
 
   private static isAllowedValueByte(byte: number): boolean {
-    return 0x20 <= byte && byte < 0x7f &&
+    return (
+      0x20 <= byte &&
+      byte < 0x7f &&
       byte != CHAR_CODES['"'] &&
       byte != CHAR_CODES[';'] &&
       byte != CHAR_CODES['\\'] &&
-      byte != CHAR_CODES[' '];
+      byte != CHAR_CODES[' ']
+    );
   }
 }
