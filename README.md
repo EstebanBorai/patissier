@@ -10,6 +10,8 @@
 
 <div align="center">
 
+![Build](https://github.com/EstebanBorai/cookie-builder/workflows/build/badge.svg)
+![Lint](https://github.com/EstebanBorai/cookie-builder/workflows/lint/badge.svg)
 ![Tests](https://github.com/EstebanBorai/cookie-builder/workflows/test/badge.svg)
 
 </div>
