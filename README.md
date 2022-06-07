@@ -2,7 +2,7 @@
   <div align="center" style="display: block; text-align: center;">
     <img src="./docs/cookie.png" height="120" width="120" />
   </div>
-  <h1 align="center">cookie-builder</h1>
+  <h1 align="center">Pâtissier</h1>
   <h4 align="center">
     HTTP Cookie builder library following the RFC6265
   </h4>
@@ -10,9 +10,9 @@
 
 <div align="center">
 
-![Build](https://github.com/EstebanBorai/cookie-builder/workflows/build/badge.svg)
-![Lint](https://github.com/EstebanBorai/cookie-builder/workflows/lint/badge.svg)
-![Tests](https://github.com/EstebanBorai/cookie-builder/workflows/test/badge.svg)
+![Build](https://github.com/EstebanBorai/patissier/workflows/build/badge.svg)
+![Lint](https://github.com/EstebanBorai/patissier/workflows/lint/badge.svg)
+![Tests](https://github.com/EstebanBorai/patissier/workflows/test/badge.svg)
 
 </div>
 
@@ -23,7 +23,7 @@ the [builder pattern][1] on the `Cookie` class exported by this library, to
 create a HTTP cookie.
 
 ```ts
-import { CookieBuilder } from 'cookie-builder';
+import { CookieBuilder } from 'patissier';
 
 const cookie = new CookieBuilder()
   .name('pepperoni')
@@ -45,7 +45,7 @@ assert(
 ## Installation
 
 ```bash
-npm install cookie-builder
+npm install patissier
 ```
 
 ## Documentation

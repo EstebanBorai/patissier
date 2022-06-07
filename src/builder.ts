@@ -5,7 +5,7 @@ import { Cookie, SameSite } from './cookie';
  * to allow cookies creation with ease.
  *
  * ```js
- * import { CookieBuilder, SameSite } from 'cookie-builder';
+ * import { CookieBuilder, SameSite } from 'patissier';
  *
  * const cookie = new CookieBuilder()
  *   .name('pepperoni')

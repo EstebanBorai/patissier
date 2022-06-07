@@ -1,5 +1,5 @@
 {
-  "name": "cookie-builder",
+  "name": "patissier",
   "version": "0.1.0",
   "description": "HTTP Cookie builder library following the RFC6265",
   "main": "./dist/index.js",
@@ -7,7 +7,7 @@
   "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EstebanBorai/cookie-builder.git"
+    "url": "git+https://github.com/EstebanBorai/patissier.git"
   },
   "keywords": [
     "http",
@@ -17,7 +17,7 @@
   "author": "Esteban Borai <estebanborai@gmail.com> (https://estebanborai.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/EstebanBorai/cookie-builder/issues"
+    "url": "https://github.com/EstebanBorai/patissier/issues"
   },
   "scripts": {
     "build": "rollup -c rollup.config.js",
