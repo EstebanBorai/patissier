@@ -264,6 +264,29 @@ export class Cookie {
     );
   }
 
+  /**
+   * Sets the `Secure` attribute for the Cookie.
+   *
+   * A cookie with the Secure attribute is only sent to the server with an
+   * encrypted request over the HTTPS protocol. It's never sent with unsecured
+   * HTTP (except on localhost), which means man-in-the-middle attackers can't
+   * access it easily.
+   *
+   * Refer: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#restrict_access_to_cookies
+   */
+  setSecure(isSecure: boolean): void {
+    if (typeof isSecure === 'boolean') {
+      this._secure = isSecure;
+      return;
+    }
+
+    throw new TypeError(
+      `Expected a value of type "boolean". But received "${
+        isSecure?.['constructor']?.['name'] || typeof isSecure
+      }" instead.`,
+    );
+  }
+
   toString(): string {
     if (this._value === null || this._name === null) {
       throw new Error(

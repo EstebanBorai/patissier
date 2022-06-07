@@ -85,7 +85,7 @@ describe('cookie', () => {
     expect(cookie.toString()).toStrictEqual(`token=${jwtToken}`);
   });
 
-  it('creates a cookie with expirity date', () => {
+  it('creates a cookie with expires attribute', () => {
     const now = new Date();
     const cookie = new Cookie();
 
@@ -114,7 +114,7 @@ describe('cookie', () => {
     ).toThrowErrorMatchingSnapshot();
   });
 
-  it('creates a cookie with same-site lax', () => {
+  it('creates a cookie with same-site attribute as lax', () => {
     const cookie = new Cookie();
     const jwtToken = 'someJwtToken';
 
@@ -125,7 +125,7 @@ describe('cookie', () => {
     expect(cookie.toString()).toStrictEqual(`token=${jwtToken}; SameSite=Lax`);
   });
 
-  it('creates a cookie with same-site none', () => {
+  it('creates a cookie with same-site attribute as none', () => {
     const cookie = new Cookie();
     const jwtToken = 'someJwtToken';
 
@@ -136,7 +136,7 @@ describe('cookie', () => {
     expect(cookie.toString()).toStrictEqual(`token=${jwtToken}; SameSite=None`);
   });
 
-  it('creates a cookie with same-site strict', () => {
+  it('creates a cookie with same-site attribute as strict', () => {
     const cookie = new Cookie();
     const jwtToken = 'someJwtToken';
 
@@ -149,7 +149,7 @@ describe('cookie', () => {
     );
   });
 
-  it('creates a cookie with max-age', () => {
+  it('creates a cookie with max-age attribute', () => {
     const cookie = new Cookie();
 
     cookie.setName('pieCookingTime');
@@ -177,7 +177,7 @@ describe('cookie', () => {
     ).toThrowErrorMatchingSnapshot();
   });
 
-  it('creates a cookie with path', () => {
+  it('creates a cookie with path attribute', () => {
     const cookie = new Cookie();
 
     cookie.setName('token');
@@ -211,6 +211,30 @@ describe('cookie', () => {
     );
     expect(() =>
       cookie.setPath(1 as unknown as string),
+    ).toThrowErrorMatchingSnapshot();
+  });
+
+  it('creates a cookie with secure attribute', () => {
+    const cookie = new Cookie();
+
+    cookie.setName('token');
+    cookie.setValue('coolToken');
+    cookie.setSecure(true);
+
+    expect(cookie.toString()).toStrictEqual(`token=coolToken; Secure`);
+  });
+
+  it('complains if the argument to `setSecure` is not an instance of boolean', () => {
+    const cookie = new Cookie();
+
+    cookie.setName('token');
+    cookie.setValue('coolToken');
+
+    expect(() => cookie.setSecure(1 as unknown as boolean)).toThrowError(
+      'Expected a value of type "boolean". But received "Number" instead.',
+    );
+    expect(() =>
+      cookie.setSecure(1 as unknown as boolean),
     ).toThrowErrorMatchingSnapshot();
   });
 });

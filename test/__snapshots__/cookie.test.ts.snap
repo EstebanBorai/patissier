@@ -4,6 +4,8 @@ exports[`cookie > complains if the argument to \`setPath\` doest starts with for
 
 exports[`cookie > complains if the argument to \`setPath\` is not an instance of string 1`] = `"Expected a value of type \\"string\\". But received \\"Number\\" instead."`;
 
+exports[`cookie > complains if the argument to \`setSecure\` is not an instance of boolean 1`] = `"Expected a value of type \\"boolean\\". But received \\"Number\\" instead."`;
+
 exports[`cookie > complains when a unexpected data type is provided for expires 1`] = `"Expected a \\"Date\\" instance. But received \\"String\\" instead."`;
 
 exports[`cookie > complains when a unexpected data type is provided for max-age 1`] = `"Expected a value of type \\"number\\". But received \\"Date\\" instead."`;
