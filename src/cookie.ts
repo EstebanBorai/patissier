@@ -357,27 +357,27 @@ export class Cookie {
     return (
       0x20 <= byte &&
       byte < 0x7f &&
-      byte != CHAR_CODES['"'] &&
-      byte != CHAR_CODES[";"] &&
-      byte != CHAR_CODES["\\"] &&
-      byte != CHAR_CODES[" "] &&
-      byte != CHAR_CODES["("] &&
-      byte != CHAR_CODES[")"] &&
-      byte != CHAR_CODES["<"] &&
-      byte != CHAR_CODES[">"] &&
-      byte != CHAR_CODES["@"] &&
-      byte != CHAR_CODES[","] &&
-      byte != CHAR_CODES[";"] &&
-      byte != CHAR_CODES[":"] &&
-      byte != CHAR_CODES["\\"] &&
-      byte != CHAR_CODES['"'] &&
-      byte != CHAR_CODES["/"] &&
-      byte != CHAR_CODES["["] &&
-      byte != CHAR_CODES["]"] &&
-      byte != CHAR_CODES["?"] &&
-      byte != CHAR_CODES["="] &&
-      byte != CHAR_CODES["{"] &&
-      byte != CHAR_CODES["}"]
+      byte !== CHAR_CODES['"'] &&
+      byte !== CHAR_CODES[";"] &&
+      byte !== CHAR_CODES["\\"] &&
+      byte !== CHAR_CODES[" "] &&
+      byte !== CHAR_CODES["("] &&
+      byte !== CHAR_CODES[")"] &&
+      byte !== CHAR_CODES["<"] &&
+      byte !== CHAR_CODES[">"] &&
+      byte !== CHAR_CODES["@"] &&
+      byte !== CHAR_CODES[","] &&
+      byte !== CHAR_CODES[";"] &&
+      byte !== CHAR_CODES[":"] &&
+      byte !== CHAR_CODES["\\"] &&
+      byte !== CHAR_CODES['"'] &&
+      byte !== CHAR_CODES["/"] &&
+      byte !== CHAR_CODES["["] &&
+      byte !== CHAR_CODES["]"] &&
+      byte !== CHAR_CODES["?"] &&
+      byte !== CHAR_CODES["="] &&
+      byte !== CHAR_CODES["{"] &&
+      byte !== CHAR_CODES["}"]
     );
   }
 
@@ -385,10 +385,10 @@ export class Cookie {
     return (
       0x20 <= byte &&
       byte < 0x7f &&
-      byte != CHAR_CODES['"'] &&
-      byte != CHAR_CODES[";"] &&
-      byte != CHAR_CODES["\\"] &&
-      byte != CHAR_CODES[" "]
+      byte !== CHAR_CODES['"'] &&
+      byte !== CHAR_CODES[";"] &&
+      byte !== CHAR_CODES["\\"] &&
+      byte !== CHAR_CODES[" "]
     );
   }
 }
