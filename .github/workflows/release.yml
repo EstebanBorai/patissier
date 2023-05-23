@@ -10,44 +10,44 @@ jobs:
     name: Run linter
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.4
         with:
-          cache: npm
-          node-version: 18
+          version: latest
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
       - name: Run linter
-        run: npm run lint
+        run: pnpm run check
 
   test:
     name: Run unit tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.4
         with:
-          cache: npm
-          node-version: 18
+          version: latest
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
       - name: Run vitest
-        run: npm run test
+        run: pnpm run test
 
   build:
     name: Builds source into JavaScript
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.4
         with:
-          cache: npm
-          node-version: 18
+          version: latest
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
       - name: Run build
-        run: npm run build
+        run: pnpm run build
 
   create-release:
     name: Create a release
@@ -55,7 +55,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Create Release Notes
         uses: actions/github-script@v5
@@ -74,14 +74,14 @@ jobs:
     env:
       NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.4
         with:
-          node-version: 18
-          registry-url: https://registry.npmjs.org/
+          version: latest
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
       - name: Build
-        run: npm run build
+        run: pnpm run build
       - name: Publish
-        run: npm publish --access public
+        run: pnpm publish --access public

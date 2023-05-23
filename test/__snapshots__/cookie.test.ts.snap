@@ -1,4 +1,4 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Cookie > complains if the argument to \`setHttpOnly\` is not an instance of boolean 1`] = `"Expected a value of type \\"boolean\\". But received \\"Number\\" instead."`;
 

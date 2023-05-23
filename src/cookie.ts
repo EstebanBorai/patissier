@@ -3,24 +3,24 @@
  * `String.prototype.charCodeAt` on every `String` when running validations.
  */
 const CHAR_CODES = {
-  ' ': 32,
+  " ": 32,
   '"': 34,
-  '(': 40,
-  ')': 41,
-  ',': 44,
-  '/': 47,
-  ':': 58,
-  ';': 59,
-  '<': 60,
-  '=': 61,
-  '>': 62,
-  '?': 63,
-  '@': 64,
-  '[': 91,
-  '\\': 92,
-  ']': 93,
-  '{': 123,
-  '}': 125,
+  "(": 40,
+  ")": 41,
+  ",": 44,
+  "/": 47,
+  ":": 58,
+  ";": 59,
+  "<": 60,
+  "=": 61,
+  ">": 62,
+  "?": 63,
+  "@": 64,
+  "[": 91,
+  "\\": 92,
+  "]": 93,
+  "{": 123,
+  "}": 125,
 };
 
 /**
@@ -43,18 +43,18 @@ export enum SameSite {
    * and cross-site requests. If SameSite=None is set, the cookie Secure
    * attribute must also be set (or the cookie will be blocked).
    */
-  None = 'None',
+  None = "None",
   /**
    * Cookies are not sent on normal cross-site subrequests (for example to load
    * images or frames into a third party site), but are sent when a user is
    * navigating to the origin site (i.e., when following a link).
    */
-  Lax = 'Lax',
+  Lax = "Lax",
   /**
    * Cookies will only be sent in a first-party context and not be sent along
    * with requests initiated by third party websites.
    */
-  Strict = 'Strict',
+  Strict = "Strict",
 }
 
 /**
@@ -137,7 +137,7 @@ export class Cookie {
       return;
     }
 
-    throw new Error('Invalid cookie name provided');
+    throw new Error("Invalid cookie name provided");
   }
 
   /**
@@ -151,7 +151,7 @@ export class Cookie {
       return;
     }
 
-    throw new Error('Invalid cookie value provided');
+    throw new Error("Invalid cookie value provided");
   }
 
   /**
@@ -189,7 +189,7 @@ export class Cookie {
 
     throw new TypeError(
       `Expected a "Date" instance. But received "${
-        date?.['constructor']?.['name'] || typeof date
+        date?.["constructor"]?.["name"] || typeof date
       }" instead.`,
     );
   }
@@ -206,14 +206,14 @@ export class Cookie {
    * behavior.
    */
   setMaxAge(seconds: number): void {
-    if (typeof seconds === 'number') {
+    if (typeof seconds === "number") {
       this._maxAge = seconds;
       return;
     }
 
     throw new TypeError(
       `Expected a value of type "number". But received "${
-        seconds?.['constructor']?.['name'] || typeof seconds
+        seconds?.["constructor"]?.["name"] || typeof seconds
       }" instead.`,
     );
   }
@@ -231,7 +231,7 @@ export class Cookie {
       return;
     }
 
-    throw new Error('Invalid domain provided.');
+    throw new Error("Invalid domain provided.");
   }
 
   /**
@@ -244,20 +244,20 @@ export class Cookie {
    * Refer: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
    */
   setPath(path: string): void {
-    if (typeof path === 'string') {
-      if (path.charCodeAt(0) === CHAR_CODES['/']) {
+    if (typeof path === "string") {
+      if (path.charCodeAt(0) === CHAR_CODES["/"]) {
         this._path = path;
         return;
       }
 
       throw new Error(
-        'Invalid value provided to `Path`. Expected a string prefixed with the forward slash character. E.g. `/docs`.',
+        "Invalid value provided to `Path`. Expected a string prefixed with the forward slash character. E.g. `/docs`.",
       );
     }
 
     throw new TypeError(
       `Expected a value of type "string". But received "${
-        path?.['constructor']?.['name'] || typeof path
+        path?.["constructor"]?.["name"] || typeof path
       }" instead.`,
     );
   }
@@ -273,14 +273,14 @@ export class Cookie {
    * Refer: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#restrict_access_to_cookies
    */
   setSecure(isSecure: boolean): void {
-    if (typeof isSecure === 'boolean') {
+    if (typeof isSecure === "boolean") {
       this._secure = isSecure;
       return;
     }
 
     throw new TypeError(
       `Expected a value of type "boolean". But received "${
-        isSecure?.['constructor']?.['name'] || typeof isSecure
+        isSecure?.["constructor"]?.["name"] || typeof isSecure
       }" instead.`,
     );
   }
@@ -292,14 +292,14 @@ export class Cookie {
    * Refer: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#restrict_access_to_cookies
    */
   setHttpOnly(isHttpOnly: boolean): void {
-    if (typeof isHttpOnly === 'boolean') {
+    if (typeof isHttpOnly === "boolean") {
       this._httpOnly = isHttpOnly;
       return;
     }
 
     throw new TypeError(
       `Expected a value of type "boolean". But received "${
-        isHttpOnly?.['constructor']?.['name'] || typeof isHttpOnly
+        isHttpOnly?.["constructor"]?.["name"] || typeof isHttpOnly
       }" instead.`,
     );
   }
@@ -310,7 +310,7 @@ export class Cookie {
   toString(): string {
     if (this._value === null || this._name === null) {
       throw new Error(
-        'Invalid Cookie. You must provide a name and a value for your Cookie.',
+        "Invalid Cookie. You must provide a name and a value for your Cookie.",
       );
     }
 
@@ -333,22 +333,22 @@ export class Cookie {
     }
 
     if (this._secure !== null) {
-      parts.push('Secure');
+      parts.push("Secure");
     }
 
     if (this._httpOnly === true) {
-      parts.push('HttpOnly');
+      parts.push("HttpOnly");
     }
 
     if (this._sameSite !== null) {
       parts.push(`SameSite=${this._sameSite.toString()}`);
     }
 
-    return parts.join('; ');
+    return parts.join("; ");
   }
 
   private static bytes(str: string): Uint8Array {
-    const bytes = Uint8Array.from(str.split('').map((x) => x.charCodeAt(0)));
+    const bytes = Uint8Array.from(str.split("").map((x) => x.charCodeAt(0)));
 
     return bytes;
   }
@@ -358,26 +358,26 @@ export class Cookie {
       0x20 <= byte &&
       byte < 0x7f &&
       byte != CHAR_CODES['"'] &&
-      byte != CHAR_CODES[';'] &&
-      byte != CHAR_CODES['\\'] &&
-      byte != CHAR_CODES[' '] &&
-      byte != CHAR_CODES['('] &&
-      byte != CHAR_CODES[')'] &&
-      byte != CHAR_CODES['<'] &&
-      byte != CHAR_CODES['>'] &&
-      byte != CHAR_CODES['@'] &&
-      byte != CHAR_CODES[','] &&
-      byte != CHAR_CODES[';'] &&
-      byte != CHAR_CODES[':'] &&
-      byte != CHAR_CODES['\\'] &&
+      byte != CHAR_CODES[";"] &&
+      byte != CHAR_CODES["\\"] &&
+      byte != CHAR_CODES[" "] &&
+      byte != CHAR_CODES["("] &&
+      byte != CHAR_CODES[")"] &&
+      byte != CHAR_CODES["<"] &&
+      byte != CHAR_CODES[">"] &&
+      byte != CHAR_CODES["@"] &&
+      byte != CHAR_CODES[","] &&
+      byte != CHAR_CODES[";"] &&
+      byte != CHAR_CODES[":"] &&
+      byte != CHAR_CODES["\\"] &&
       byte != CHAR_CODES['"'] &&
-      byte != CHAR_CODES['/'] &&
-      byte != CHAR_CODES['['] &&
-      byte != CHAR_CODES[']'] &&
-      byte != CHAR_CODES['?'] &&
-      byte != CHAR_CODES['='] &&
-      byte != CHAR_CODES['{'] &&
-      byte != CHAR_CODES['}']
+      byte != CHAR_CODES["/"] &&
+      byte != CHAR_CODES["["] &&
+      byte != CHAR_CODES["]"] &&
+      byte != CHAR_CODES["?"] &&
+      byte != CHAR_CODES["="] &&
+      byte != CHAR_CODES["{"] &&
+      byte != CHAR_CODES["}"]
     );
   }
 
@@ -386,9 +386,9 @@ export class Cookie {
       0x20 <= byte &&
       byte < 0x7f &&
       byte != CHAR_CODES['"'] &&
-      byte != CHAR_CODES[';'] &&
-      byte != CHAR_CODES['\\'] &&
-      byte != CHAR_CODES[' ']
+      byte != CHAR_CODES[";"] &&
+      byte != CHAR_CODES["\\"] &&
+      byte != CHAR_CODES[" "]
     );
   }
 }

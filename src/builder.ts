@@ -1,4 +1,4 @@
-import { Cookie, SameSite } from './cookie';
+import { Cookie, SameSite } from "./cookie.js";
 
 /**
  * Implements the [builder pattern][1] for the `Cookie` class,
