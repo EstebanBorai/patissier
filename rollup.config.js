@@ -1,21 +1,12 @@
-import commonjs from '@rollup/plugin-commonjs';
-import typescript from 'rollup-plugin-typescript2';
-import resolve from '@rollup/plugin-node-resolve';
-
-import pkg from './package.json';
+import typescript from "@rollup/plugin-typescript";
 
 export default {
-  input: 'src/index.ts',
+  input: "src/index.ts",
   output: [
-    { file: pkg.module, format: 'es', sourcemap: true },
-    { file: pkg.main, format: 'umd', name: pkg.name, sourcemap: true },
+    {
+      dir: "dist",
+      format: "es",
+    },
   ],
-  plugins: [
-    commonjs(),
-    typescript({
-      rollupCommonJSResolveHack: false,
-      clean: true,
-    }),
-    resolve(),
-  ],
+  plugins: [typescript()],
 };

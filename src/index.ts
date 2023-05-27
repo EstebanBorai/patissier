@@ -1,2 +1,2 @@
-export { Cookie, SameSite, DOMAIN_REGEXP } from './cookie';
-export { CookieBuilder } from './builder';
+export { Cookie, SameSite, DOMAIN_REGEXP } from "./cookie.js";
+export { CookieBuilder } from "./builder.js";
